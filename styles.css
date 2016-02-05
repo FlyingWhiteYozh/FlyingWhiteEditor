@@ -1,0 +1,9 @@
+#fweMainModalButton {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+}
+
+#fweMainForm * {
+	width: 100%;
+}
