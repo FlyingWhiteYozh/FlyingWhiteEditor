@@ -16,6 +16,8 @@ engines:
   phpmd:
     enabled: true
     rulesets: "unusedcode,codesize,design,controversial,cleancode,naming,phpmd.ruleset.xml"
+     exclude_fingerprints:
+    - f9048e2f5e7bdb8a2a82ca861ac0f95d
 ratings:
   paths:
   - "**.css"
