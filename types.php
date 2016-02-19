@@ -88,6 +88,20 @@ return array(
 			)
 		),
 
+	'post' => new Type (
+		'post',
+		's_blog',
+		array('id'),
+		array(
+			'meta_title' => new Field('Title'),
+			'meta_description' => new Field('Description'),
+			'meta_keywords' => new Field('Keywords'),
+			'name' => new Field('Name'),
+			'text' => new Field('Text'),
+			'annotation' => new Field('Annotation'),
+			)
+		),
+
 	'brand_category' => new Type (
 		'brand_category',
 		's_brands_categories',
