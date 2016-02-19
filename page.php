@@ -48,7 +48,7 @@ class Page
 		$sqlUpdateFields = array();
 		$sqlValues = array();
 		
-		foreach($this->type->fields as $fieldKey => $field) {
+		foreach(array_keys($this->type->fields) as $fieldKey) {
 			if(!isset($vars[$fieldKey])) error('Field "' . $fieldKey . '" not found');
 			$sqlInsertFields[] = $fieldKey;
 			$sqlPlaceholders[] = ':' . $fieldKey;
@@ -102,7 +102,6 @@ class Page
 
 	private function getWhereClause(&$values)
 	{
-		static $i=0;
 		if(!is_array($this->type->id)) {
 			$idFields = array($this->type->id);
 			$idValues = array($this->id);

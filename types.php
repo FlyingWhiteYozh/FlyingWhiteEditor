@@ -11,13 +11,6 @@ if(!class_exists('Field')) {
 			$this->callback = $callback;
 		}
 
-		private function getValue()
-		{
-			if($name == 'Keywords') $value = mb_strtolower($value);
-			if(is_callable($callback)) return $callback($value);
-			else return $value;
-		}
-
 	}
 }
 if(!class_exists('Type')) {
