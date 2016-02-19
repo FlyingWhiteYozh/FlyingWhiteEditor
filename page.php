@@ -75,7 +75,6 @@ class Page
 			// var_dump($this);
 			$this->get();
 		} else {
-			var_dump('qew');
 			error(var_export($stmt->errorInfo(), 1));
 		}
 	}

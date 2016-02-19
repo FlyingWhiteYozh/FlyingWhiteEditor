@@ -74,6 +74,20 @@ return array(
 			'description' => new Field('Text'),
 			)
 		),
+
+	'page' => new Type (
+		'page',
+		's_pages',
+		array('id'),
+		array(
+			'meta_title' => new Field('Title'),
+			'meta_description' => new Field('Description'),
+			'meta_keywords' => new Field('Keywords'),
+			'name' => new Field('Name'),
+			'body' => new Field('Text'),
+			)
+		),
+
 	'brand_category' => new Type (
 		'brand_category',
 		's_brands_categories',

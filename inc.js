@@ -1,7 +1,6 @@
 fwjQ(function($){
-  console.log()
   var id = $('meta[name="_id"]').attr('content');
-  if(id) $('body').append('<button id="fweMainModalButton" type="button">Edit</button>');
+  if(id) $('body').append('<button id="fweMainModalButton" type="button">Edit ' + id + '</button>');
   /*$(window).resize(function() {
         var h = ;
         var w = $(window).width();
