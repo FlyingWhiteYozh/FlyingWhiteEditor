@@ -9,6 +9,11 @@ $(function(){
 		$('#fweMainForm').submit();
 	});
 
+	$(document).on('keydown', null, 'Ctrl+s', function() { 
+		$('#fweMainForm').submit();
+		return false;
+	});
+	
 	$('#fweMainForm').submit(function(){
 		var data = $(this).serialize();
 		$(this).html('');
@@ -18,4 +23,6 @@ $(function(){
 		});
 		return false;
 	});
+
+
 });
