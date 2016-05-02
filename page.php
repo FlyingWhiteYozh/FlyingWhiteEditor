@@ -1,23 +1,5 @@
 <?php
 namespace FWE;
-/*abstract class Page
-{
-	protected abstract function __construct($id);
-	public abstract function update($vars);
-
-	static function get($id)
-	{
-		if(!strpos($id, ':')) error('Malformed ID');
-
-		list($type, $id) = explode(':', $id);
-
-		$class = '\FWE\Page\\' . $type;
-
-		if(!class_exists($class) || !is_subclass_of($class, '\FWE\Page')) error('Type is not allowed');
-
-		return new $class($id);
-	}
-}*/
 
 class Page
 {
@@ -26,18 +8,13 @@ class Page
 	{
 		if(!strpos($id, ':')) error('Malformed ID');
 
-		list($type, $this->id) = explode(':', $id);
+		list($typeName, $id) = explode(':', $id);
 
-		
-		$types = $this->getTypes();
-		if(!isset($types[$type])) error('Type is not allowed');
-		$this->type = $types[$type];
+		$this->type = Types::get($typeName);
+		if(!$this->type) error('Type "' . $typeName . '" is not allowed');
 
-		if(is_array($this->type->id)) {
-			$this->id = explode('-', $this->id);
-			// var_dump($this->id);
-			if(count($this->type->id) != count($this->id)) error('Malformed ID ' . count($this->type->id) . '/' . count($this->id));
-		}
+		$this->id = explode('-', $id);
+		if(count($this->type->id) != count($this->id)) error('Malformed ID ' . count($this->type->id) . '/' . count($this->id));
 	}
 
 	public function update($vars)
@@ -120,10 +97,4 @@ class Page
 		return ' WHERE ' . implode(' && ', $placeholders);
 	}
 
-	private function getTypes()
-	{
-		static $types = NULL;
-		if($types === NULL) $types = include(__DIR__.'/types.php');
-		return $types;
-	}
 }

@@ -12,7 +12,7 @@ function output_callback($content)
 
 function error($message)
 {
-	die('<div class="alert alert-danger">' . $message . '</div>');
+	die('<div class="alert alert-danger">' . htmlspecialchars($message) . '</div>');
 }
 
 require 'page.php';
