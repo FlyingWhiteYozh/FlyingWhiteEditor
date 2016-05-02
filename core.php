@@ -1,9 +1,9 @@
 <?php
-namespace FWE;
-require __DIR__.'conf.php';
-ob_start('\fwe\output_callback');
 
-function output_callback($content)
+require dirname(__FILE__).'conf.php';
+ob_start('fwe_output_callback');
+
+function fwe_output_callback($content)
 {
 	if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') return false;
 

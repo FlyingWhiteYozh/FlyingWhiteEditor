@@ -1,6 +1,4 @@
 <?php
-namespace FWE;
-
 
 class Field
 {
