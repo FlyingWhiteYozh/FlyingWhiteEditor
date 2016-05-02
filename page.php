@@ -79,13 +79,8 @@ class Page
 
 	private function getWhereClause(&$values)
 	{
-		if(!is_array($this->type->id)) {
-			$idFields = array($this->type->id);
-			$idValues = array($this->id);
-		} else {
-			$idFields = $this->type->id;
-			$idValues = $this->id;
-		}
+		$idFields = $this->type->id;
+		$idValues = $this->id;
 
 		$placeholders = array();
 
