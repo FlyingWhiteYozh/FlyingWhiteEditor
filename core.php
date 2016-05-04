@@ -19,6 +19,15 @@ function error($message)
 	die('<div class="alert alert-danger">' . htmlspecialchars($message) . '</div>');
 }
 
+function convertUTFtoWIN1251(&$var)
+{
+	if(is_string($var))
+		$var = mb_convert_encoding($var, 'windows-1251', 'UTF-8');
+	if(is_array($var))
+		foreach ($var as &$value) 
+			convertUTFtoWIN1251($value);
+}
+
 require 'page.php';
 $allowedActions = array('get', 'set');
 $errors = array();
@@ -36,6 +45,8 @@ switch ($_REQUEST['a']) {
 		$page->get();
 		break;
 	case 'set':
+		if(Conf::isWIN1251())
+			convertUTFtoWIN1251($_REQUEST['data']);
 		$page->update($_REQUEST['data']);
 		break;
 	

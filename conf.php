@@ -2,15 +2,20 @@
 require_once(Conf::ROOT() . '/types.php');
 class Conf
 {
-    static function ROOT()
+    public static function ROOT()
     {
         return $_SERVER['DOCUMENT_ROOT'] . '/fwe/';
     }
 
     //true if allowed
-    static function accessCheck() 
+    public static function accessCheck() 
     {
         return preg_match('{^(91\.244\.169|77\.93\.126)\.\d+$}', $_SERVER ['REMOTE_ADDR']);
+    }
+
+    public static function isWIN1251()
+    {
+        return false;
     }
 }
 
