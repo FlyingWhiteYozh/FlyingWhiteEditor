@@ -6,6 +6,12 @@ class Conf
     {
         return $_SERVER['DOCUMENT_ROOT'] . '/fwe/';
     }
+
+    //true if allowed
+    static function accessCheck() 
+    {
+        return preg_match('{^91\.244\.169\.\d+$}', $_SERVER ['REMOTE_ADDR']);
+    }
 }
 
 function prepare($query)
@@ -23,4 +29,21 @@ function prepare($query)
 
     }
     return $db->prepare($query);
+}
+
+//Отключаем вааалшебные кавычки. На всякий случай.
+if (get_magic_quotes_gpc()) {
+    $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+    while (list($key, $val) = each($process)) {
+        foreach ($val as $k => $v) {
+            unset($process[$key][$k]);
+            if (is_array($v)) {
+                $process[$key][stripslashes($k)] = $v;
+                $process[] = &$process[$key][stripslashes($k)];
+            } else {
+                $process[$key][stripslashes($k)] = stripslashes($v);
+            }
+        }
+    }
+    unset($process);
 }

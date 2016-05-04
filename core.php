@@ -1,6 +1,10 @@
 <?php
 
 require dirname(__FILE__).'conf.php';
+
+if (!Conf::checkRights())
+	die('access denied');
+
 ob_start('fwe_output_callback');
 
 function fwe_output_callback($content)
