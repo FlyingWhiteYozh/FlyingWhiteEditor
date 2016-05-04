@@ -32,22 +32,52 @@ require 'page.php';
 $allowedActions = array('get', 'set');
 $errors = array();
 
-if(empty($_REQUEST['id']))  $errors[] = 'ID isn\'t specified';
+if(empty($_REQUEST['a']) || !in_array($_REQUEST['a'], $allowedActions))  
+	$errors[] = 'Action is not allowed';
+$action = $_REQUEST['a'];
 
-if(empty($_REQUEST['a']) || !in_array($_REQUEST['a'], $allowedActions))  $errors[] = 'Action is not allowed';
+
+if($action == 'set') {
+	if(!isset($_REQUEST['data'])) error('You must provide "data" for this method');
+	$data = $_REQUEST['data'];
+}
+
+if(Conf::isWIN1251()){
+	convertUTFtoWIN1251($data);
+}
+
+if(empty($_REQUEST['id'])) {
+	if($action == 'set') {
+		$pages = array();
+		foreach($_REQUEST['data'] as $pageData){
+			if(isset($pageData['id'])) 
+				$pages[] = new Page($pageData['id']);
+			else
+				$errors[] = 'ID isn\'t specified';
+		}
+	} 
+	else 
+		$errors[] = 'ID isn\'t specified';
+}
 
 if(count($errors)) error(implode('<br>'.PHP_EOL, $errors));	
 
-$page = new Page($_REQUEST['id']);
+if(!isset($pages)){
+	$ids = (array)$_REQUEST['id'];
+	$pages = array();
+	foreach($ids as $id)
+		$pages[] = new Page($id);
+}
 
-switch ($_REQUEST['a']) {
+switch ($action) {
 	case 'get':
-		$page->get();
+		foreach($pages as $page)
+			$page->get();
 		break;
 	case 'set':
-		if(Conf::isWIN1251())
-			convertUTFtoWIN1251($_REQUEST['data']);
-		$page->update($_REQUEST['data']);
+		foreach($pages as $page)
+
+			$page->update($data[$page->idToString()]);
 		break;
 	
 	default:

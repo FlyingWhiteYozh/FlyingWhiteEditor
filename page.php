@@ -57,7 +57,7 @@ class Page
 
 	public function get()
 	{
-		$content = '<input type="hidden" name="id" value="' . $this->type->name . ':' . (is_array($this->id) ? implode('-', $this->id) : $this->id) . '">';
+		$content = '<hr><div class="form"><p>' . $this->idToString() . '</p><input type="hidden" name="data[' . $this->idToString() . '][id]" class="id" value="' . $this->idToString() . '">';
 		$sqlValues = array();
 		$sql = 'SELECT ' . implode(',', array_keys($this->type->fields)) . ' FROM ' . $this->type->table . $this->getWhereClause($sqlValues);
 		$stmt = prepare($sql);
@@ -70,8 +70,9 @@ class Page
 		if(!$data && !$this->type->shouldInsert) error('Page not found');
 		
 		foreach($this->type->fields as $fieldKey=>$field) {
-			$content .= '<div class="form-group"><label for="' . $fieldKey . '">' . $field->name . '</label> <textarea class="form-control" rows="1" name="data[' . $fieldKey . ']" id="' . $fieldKey . '">' . htmlspecialchars($data[$fieldKey]) . '</textarea></div>';
+			$content .= '<div class="form-group"><label for="' . $fieldKey . '">' . $field->name . '</label> <textarea class="form-control" rows="1" name="data[' . $this->idToString() . '][' . $fieldKey . ']" id="' . $fieldKey . '">' . htmlspecialchars($data[$fieldKey]) . '</textarea></div>';
 		}
+		$content .= '</div>';
 		// var_dump($this->type);
 		echo $content;
 	}
@@ -89,6 +90,11 @@ class Page
 		}
 
 		return ' WHERE ' . implode(' && ', $placeholders);
+	}
+
+	public function idToString()
+	{
+		return $this->type->name . ':' . implode('-',$this->id);
 	}
 
 }

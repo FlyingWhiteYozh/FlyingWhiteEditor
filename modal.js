@@ -15,8 +15,9 @@ $(function(){
 	});
 	
 	$('#fweMainForm').submit(function(){
-		var data = $(this).serialize();
-		$(this).html('');
+		var t = $(this);
+		var data = t.serialize();
+		t.html('');
 		$.post('/fwe/core.php?a=set', data, function(data){
 			$('#fweMainForm').html(data);
 			autosize($('textarea'));
