@@ -2,7 +2,7 @@
 
 require dirname(__FILE__).'/conf.php';
 
-if (!Conf::checkRights())
+if (!Conf::accessCheck())
 	die('access denied');
 
 ob_start('fwe_output_callback');
