@@ -66,7 +66,7 @@ class Page
 		if(!$result) {
 			error(var_export($stmt->errorInfo(), 1));
 		}
-		$data = $stmt->fetch(\PDO::FETCH_ASSOC);
+		$data = $stmt->fetch(PDO::FETCH_ASSOC);
 		if(!$data && !$this->type->shouldInsert) error('Page not found');
 		
 		foreach($this->type->fields as $fieldKey=>$field) {

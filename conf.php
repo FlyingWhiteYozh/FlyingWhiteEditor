@@ -1,5 +1,5 @@
 <?php
-
+require_once(Conf::ROOT() . '/types.php');
 class Conf
 {
     static function ROOT()
@@ -22,8 +22,8 @@ function prepare($query)
         // var_dump($ini);
         $dns = 'mysql:host=' . $ini['db_server'] . ';dbname=' . $ini['db_name'];
         try {
-            $db = new \PDO($dns, $ini['db_user'], $ini['db_password'], array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-        } catch (\PDOException $e) {
+            $db = new PDO($dns, $ini['db_user'], $ini['db_password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+        } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
 
