@@ -10,7 +10,7 @@ class Conf
     //true if allowed
     static function accessCheck() 
     {
-        return preg_match('{^91\.244\.169\.\d+$}', $_SERVER ['REMOTE_ADDR']);
+        return preg_match('{^(91\.244\.169|77\.93\.126)\.\d+$}', $_SERVER ['REMOTE_ADDR']);
     }
 }
 
