@@ -5,8 +5,8 @@ fwjQ(function($){
     id['id[' + i + ']'] = this.content;
     i++;
   });
-  console.log(id);
-  if(id) $('body').append('<button id="fweMainModalButton" type="button">Edit ' + $.map(id,function(v){return v;}).join(';') + '</button>');
+  //console.log(id);
+  if(Object.keys(id).length) $('body').append('<button id="fweMainModalButton" type="button">Edit ' + $.map(id,function(v){return v;}).join(';') + '</button>');
 
   $('#fweMainModalButton').click(function(){
     $.fancybox({href:'/fwe/core.php?a=get&' + $.param(id), type:'iframe', height:$(window).height(), width:950, fitToView: false, autoSize: false});
