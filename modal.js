@@ -25,5 +25,9 @@ $(function(){
 		return false;
 	});
 
+	$('textarea').click(function () {
+		var t = this;
+		setTimeout(function () { t.select(); }, 50);
+	})
 
 });
