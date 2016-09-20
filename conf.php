@@ -23,11 +23,14 @@ function prepare($query)
 {
     static $db = NULL;
     if($db === NULL) {
-        $ini = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-        // var_dump($ini);
-        $dns = 'mysql:host=' . $ini['db_server'] . ';dbname=' . $ini['db_name'];
+        $driver   = 'mysql';
+        $host     = 'localhost';
+        $dbname   = '';
+        $dns      = "$driver:host=$host;dbname=$dbname";
+        $password = '';
+        $username = '';
         try {
-            $db = new PDO($dns, $ini['db_user'], $ini['db_password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+            $db = new PDO($dns, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
