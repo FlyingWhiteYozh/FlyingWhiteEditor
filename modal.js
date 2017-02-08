@@ -1,6 +1,6 @@
 $(function(){
 	autosize($('textarea'));
-	
+
 	$('.fb-close').click(function(){
 		parent.fwjQ.fancybox.close();
 	});
@@ -9,11 +9,11 @@ $(function(){
 		$('#fweMainForm').submit();
 	});
 
-	$(document).on('keydown', null, 'Ctrl+s', function() { 
+	$(document).on('keydown', null, 'Ctrl+s', function() {
 		$('#fweMainForm').submit();
 		return false;
 	});
-	
+
 	$('#fweMainForm').submit(function(){
 		var t = $(this);
 		var data = t.serialize();
@@ -25,9 +25,11 @@ $(function(){
 		return false;
 	});
 
-	$('textarea').click(function () {
+	$('textarea').click(function (e) {
 		var t = this;
-		setTimeout(function () { t.select(); }, 50);
+		if(e.shiftKey) {
+			setTimeout(function () { t.select(); }, 50);
+		}
 	})
 
 });
