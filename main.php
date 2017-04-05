@@ -1,9 +1,9 @@
 <?php
 
-class FWE_Main
+class Main
 {
 	public function __construct()
 	{
-		
+
 	}
 }

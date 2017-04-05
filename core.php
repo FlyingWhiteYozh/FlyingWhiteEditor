@@ -109,7 +109,7 @@ switch ($action) {
         break;
 
     case 'main':
-        $main = new FWE_Main;
+        $main = new Main;
         break;
 
     default:
