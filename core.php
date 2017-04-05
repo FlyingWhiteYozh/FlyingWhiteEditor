@@ -36,6 +36,7 @@ function convertUTFtoWIN1251(&$var)
 
 }
 
+require Conf::ROOT() . '/pages/main.php';
 require Conf::ROOT() . '/page.php';
 require Conf::ROOT() . '/main.php';
 
