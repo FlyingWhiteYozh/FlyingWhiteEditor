@@ -1,5 +1,5 @@
 <?php
-require_once(Conf::ROOT() . '/types.php');
+require_once Conf::ROOT() . '/types.php';
 class Conf
 {
     public static function ROOT()
@@ -8,21 +8,18 @@ class Conf
     }
 
     //true if allowed
-    public static function accessCheck() 
+    public static function accessCheck()
     {
-        return preg_match('{^(91\.244\.169|77\.93\.126)\.\d+$}', $_SERVER ['REMOTE_ADDR']);
+        return preg_match('{^(91\.244\.169|77\.93\.126)\.\d+$}', $_SERVER['REMOTE_ADDR']);
     }
 
     public static function isWIN1251()
     {
         return false;
     }
-}
 
-function prepare($query)
-{
-    static $db = NULL;
-    if($db === NULL) {
+    public static function getDB()
+    {
         $driver   = 'mysql';
         $host     = 'localhost';
         $dbname   = '';
@@ -31,10 +28,19 @@ function prepare($query)
         $username = '';
         try {
             $db = new PDO($dns, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+            return $db;
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
+            return false;
         }
+    }
+}
 
+function prepare($query)
+{
+    static $db = null;
+    if ($db === null) {
+        $db = Conf::getDB();
     }
     return $db->prepare($query);
 }
@@ -47,7 +53,7 @@ if (get_magic_quotes_gpc()) {
             unset($process[$key][$k]);
             if (is_array($v)) {
                 $process[$key][stripslashes($k)] = $v;
-                $process[] = &$process[$key][stripslashes($k)];
+                $process[]                       = &$process[$key][stripslashes($k)];
             } else {
                 $process[$key][stripslashes($k)] = stripslashes($v);
             }
