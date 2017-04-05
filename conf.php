@@ -30,8 +30,7 @@ class Conf
             $db = new PDO($dns, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
             return $db;
         } catch (PDOException $e) {
-            echo 'Connection failed: ' . $e->getMessage();
-            return false;
+            error('DB connection error: ' . $e->getMessage());
         }
     }
 }
