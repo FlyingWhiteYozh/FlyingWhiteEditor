@@ -1,6 +1,6 @@
 <?php
-require_once Conf::ROOT() . '/types.php';
-class Conf
+require_once FWE_Conf::ROOT() . '/types.php';
+class FWE_Conf
 {
     public static function ROOT()
     {
@@ -30,7 +30,7 @@ class Conf
             $db = new PDO($dns, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
             return $db;
         } catch (PDOException $e) {
-            error('DB connection error: ' . $e->getMessage());
+            fwe_error('DB connection error: ' . $e->getMessage());
         }
     }
 }
@@ -39,7 +39,7 @@ function prepare($query)
 {
     static $db = null;
     if ($db === null) {
-        $db = Conf::getDB();
+        $db = FWE_Conf::getDB();
     }
     return $db->prepare($query);
 }

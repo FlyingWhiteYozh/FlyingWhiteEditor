@@ -2,7 +2,7 @@
 
 require dirname(__FILE__) . '/conf.php';
 
-if (!Conf::accessCheck()) {
+if (!FWE_Conf::accessCheck()) {
     die('access denied');
 }
 
@@ -14,25 +14,25 @@ function fwe_output_callback($content)
         return false;
     }
 
-    return str_replace('{content}', $content, file_get_contents(Conf::ROOT() . '/modal.html'));
+    return str_replace('{content}', $content, file_get_contents(FWE_Conf::ROOT() . '/modal.html'));
 }
 
-function error($message)
+function fwe_error($message)
 {
     die('<div class="alert alert-danger">' . ($message) . '</div>');
 }
 
-function success($message)
+function fwe_success($message)
 {
     echo '<div class="alert alert-success">' . $message . '</div>';
 }
 
-function html_link($href, $name)
+function fwe_html_link($href, $name)
 {
 	return '<a href="/fwe/core.php?a=' . $href . '">' . $name . '</a>';
 }
 
-function convertUTFtoWIN1251(&$var)
+function fwe_convertUTFtoWIN1251(&$var)
 {
     if (is_string($var)) {
         $var = mb_convert_encoding($var, 'windows-1251', 'UTF-8');
@@ -40,15 +40,15 @@ function convertUTFtoWIN1251(&$var)
 
     if (is_array($var)) {
         foreach ($var as &$value) {
-            convertUTFtoWIN1251($value);
+            fwe_convertUTFtoWIN1251($value);
         }
     }
 
 }
 
-require Conf::ROOT() . '/pages/main.php';
-require Conf::ROOT() . '/page.php';
-require Conf::ROOT() . '/main.php';
+require FWE_Conf::ROOT() . '/pages/main.php';
+require FWE_Conf::ROOT() . '/page.php';
+require FWE_Conf::ROOT() . '/main.php';
 
 $allowedActions = array('main', 'get', 'set');
 $errors         = array();
@@ -65,14 +65,14 @@ if (!in_array($action, $allowedActions)) {
 
 if ($action == 'set') {
     if (!isset($_REQUEST['data'])) {
-        error('You must provide "data" for this method');
+        fwe_error('You must provide "data" for this method');
     }
 
     $data = $_REQUEST['data'];
 }
 
-if (Conf::isWIN1251()) {
-    convertUTFtoWIN1251($data);
+if (FWE_Conf::isWIN1251()) {
+    fwe_convertUTFtoWIN1251($data);
 }
 
 if (empty($_REQUEST['id'])) {
@@ -80,7 +80,7 @@ if (empty($_REQUEST['id'])) {
         $pages = array();
         foreach ($_REQUEST['data'] as $pageData) {
             if (isset($pageData['id'])) {
-                $pages[] = new Page($pageData['id']);
+                $pages[] = new FWE_Page($pageData['id']);
             } else {
                 $errors[] = 'ID isn\'t specified';
             }
@@ -93,14 +93,14 @@ if (empty($_REQUEST['id'])) {
 }
 
 if (count($errors)) {
-    error(implode('<br>' . PHP_EOL, $errors));
+    fwe_error(implode('<br>' . PHP_EOL, $errors));
 }
 
 if (!isset($pages) && !empty($_REQUEST['id']) && is_array($_REQUEST['id'])) {
     $ids   = (array) $_REQUEST['id'];
     $pages = array();
     foreach ($ids as $id) {
-        $pages[] = new Page($id);
+        $pages[] = new FWE_Page($id);
     }
 
 }
@@ -120,10 +120,10 @@ switch ($action) {
         break;
 
     case 'main':
-        $main = new Main;
+        $main = new FWE_Main;
         break;
 
     default:
-        error('Not allowed');
+        fwe_error('Not allowed');
         break;
 }

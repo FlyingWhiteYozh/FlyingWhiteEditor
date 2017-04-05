@@ -1,24 +1,24 @@
 <?php
 
-class Page
+class FWE_Page
 {
     private $type, $id;
     public function __construct($id)
     {
         if (!strpos($id, ':')) {
-            error('Malformed ID');
+            fwe_error('Malformed ID');
         }
 
         list($typeName, $id) = explode(':', $id);
 
         $this->type = Types::get($typeName);
         if (!$this->type) {
-            error('Type "' . $typeName . '" is not allowed');
+            fwe_error('Type "' . $typeName . '" is not allowed');
         }
 
         $this->id = explode('-', $id);
         if (count($this->type->id) != count($this->id)) {
-            error('Malformed ID ' . count($this->type->id) . '/' . count($this->id));
+            fwe_error('Malformed ID ' . count($this->type->id) . '/' . count($this->id));
         }
 
     }
@@ -33,7 +33,7 @@ class Page
 
         foreach (array_keys($this->type->fields) as $fieldKey) {
             if (!isset($vars[$fieldKey])) {
-                error('Field "' . $fieldKey . '" not found');
+                fwe_error('Field "' . $fieldKey . '" not found');
             }
 
             $sqlInsertFields[]    = $fieldKey;
@@ -58,11 +58,11 @@ class Page
         $stmt = prepare($sql);
         // var_dump($sql, $sqlValues, $this->type);
         if ($stmt->execute($sqlValues)) {
-            echo '<div class="alert alert-success">OK! ' . $stmt->rowCount() . ' rows affected.</div>';
+            fwe_success('OK! ' . $stmt->rowCount() . ' rows affected.');
             // var_dump($this);
             $this->get();
         } else {
-            error(var_export($stmt->errorInfo(), 1));
+            fwe_error(var_export($stmt->errorInfo(), 1));
         }
     }
 
@@ -75,11 +75,11 @@ class Page
         // var_dump($stmt);
         $result = $stmt->execute($sqlValues);
         if (!$result) {
-            error(var_export($stmt->errorInfo(), 1));
+            fwe_error(var_export($stmt->errorInfo(), 1));
         }
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$data && !$this->type->shouldInsert) {
-            error('Page not found');
+            fwe_error('FWE_Page not found');
         }
 
         foreach ($this->type->fields as $fieldKey => $field) {

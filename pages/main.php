@@ -1,6 +1,6 @@
 <?php
 
-class PageMain
+class FWE_PageMain
 {
     const TABLE_NAME = 'fwe_page';
 

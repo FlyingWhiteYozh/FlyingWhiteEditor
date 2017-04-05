@@ -1,10 +1,10 @@
 <?php
 
-class Main
+class FWE_Main
 {
     public function __construct()
     {
-        $this->db = Conf::getDB();
+        $this->db = FWE_Conf::getDB();
 
         $action = false;
         if (isset($_REQUEST['s'])) {
@@ -13,7 +13,7 @@ class Main
 
         if ($action) {
             if (!method_exists($this, $action)) {
-                error('No such method');
+                fwe_error('No such method');
             }
 
             $this->$action();
@@ -24,17 +24,17 @@ class Main
 
     public function checkMainTable()
     {
-        $page = new PageMain($this->db);
+        $page = new FWE_PageMain($this->db);
         if (!$page->checkTable()) {
-            error('Table "' . PageMain::TABLE_NAME . '" doesn\'t exist. ' . html_link('main&s=CreateTable', 'Create?'));
+            fwe_error('Table "' . FWE_PageMain::TABLE_NAME . '" doesn\'t exist. ' . fwe_html_link('main&s=CreateTable', 'Create?'));
         }
     }
 
     public function actionCreateTable()
     {
-        $page = new PageMain($this->db);
+        $page = new FWE_PageMain($this->db);
         $page->createTable();
-        success('Table was successfully created');
+        fwe_success('Table was successfully created');
     }
 
 }
