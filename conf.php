@@ -4,7 +4,7 @@ class Conf
 {
     public static function ROOT()
     {
-        return $_SERVER['DOCUMENT_ROOT'] . '/fwe/';
+        return $_SERVER['DOCUMENT_ROOT'] . '/fwe';
     }
 
     //true if allowed

@@ -14,7 +14,7 @@ function fwe_output_callback($content)
         return false;
     }
 
-    return str_replace('{content}', $content, file_get_contents(Conf::ROOT() . 'modal.html'));
+    return str_replace('{content}', $content, file_get_contents(Conf::ROOT() . '/modal.html'));
 }
 
 function error($message)
@@ -36,15 +36,21 @@ function convertUTFtoWIN1251(&$var)
 
 }
 
-require 'page.php';
-$allowedActions = array('get', 'set');
+require Conf::ROOT() . '/page.php';
+require Conf::ROOT() . '/main.php';
+
+$allowedActions = array('main', 'get', 'set');
 $errors         = array();
 
-if (empty($_REQUEST['a']) || !in_array($_REQUEST['a'], $allowedActions)) {
-    $errors[] = 'Action is not allowed';
+if (empty($_REQUEST['a'])) {
+    $_REQUEST['a'] = 'main';
 }
 
 $action = $_REQUEST['a'];
+
+if (!in_array($action, $allowedActions)) {
+    $errors[] = 'Action is not allowed';
+}
 
 if ($action == 'set') {
     if (!isset($_REQUEST['data'])) {
@@ -69,7 +75,7 @@ if (empty($_REQUEST['id'])) {
             }
 
         }
-    } else {
+    } elseif ($action == 'get') {
         $errors[] = 'ID isn\'t specified';
     }
 
@@ -79,7 +85,7 @@ if (count($errors)) {
     error(implode('<br>' . PHP_EOL, $errors));
 }
 
-if (!isset($pages)) {
+if (!isset($pages) && !empty($_REQUEST['id']) && is_array($_REQUEST['id'])) {
     $ids   = (array) $_REQUEST['id'];
     $pages = array();
     foreach ($ids as $id) {
@@ -100,6 +106,10 @@ switch ($action) {
             $page->update($data[$page->idToString()]);
         }
 
+        break;
+
+    case 'main':
+        $main = new FWE_Main;
         break;
 
     default:
