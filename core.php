@@ -19,7 +19,17 @@ function fwe_output_callback($content)
 
 function error($message)
 {
-    die('<div class="alert alert-danger">' . htmlspecialchars($message) . '</div>');
+    die('<div class="alert alert-danger">' . ($message) . '</div>');
+}
+
+function success($message)
+{
+    echo '<div class="alert alert-success">' . $message . '</div>';
+}
+
+function html_link($href, $name)
+{
+	return '<a href="/fwe/core.php?a=' . $href . '">' . $name . '</a>';
 }
 
 function convertUTFtoWIN1251(&$var)
