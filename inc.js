@@ -12,3 +12,13 @@ fwjQ(function($){
     $.fancybox({href:'/fwe/core.php?a=get&' + $.param(id), type:'iframe', height:$(window).height(), width:950, fitToView: false, autoSize: false});
   });
 });
+
+function FWE_getMeta()
+{
+  return {
+    title: fwjQ('title').html(),
+    description: fwjQ('meta[name="description"]').attr('content'),
+    keywords: fwjQ('meta[name="keywords"]').attr('content'),
+    h1: fwjQ('h1').html(),
+  }
+}

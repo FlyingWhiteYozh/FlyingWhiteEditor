@@ -32,4 +32,24 @@ $(function(){
 		}
 	})
 
+	var title = $('#title');
+	var description = $('#description');
+	var keywords = $('#keywords');
+	var h1 = $('#h1');
+	var meta = window.parent.FWE_getMeta();
+
+	if (!title.val()) {
+		title.val(meta.title);
+	}
+	if (!description.val()) {
+		description.val(meta.description);
+	}
+	if (!keywords.val()) {
+		keywords.val(meta.keywords);
+	}
+	if (!h1.val()) {
+		h1.val(meta.h1);
+	}
+
+
 });
