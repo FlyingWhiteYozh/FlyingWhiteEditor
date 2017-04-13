@@ -5,7 +5,7 @@ require FWE_Conf::ROOT() . '/pages/main.php';
 class FWE_Lib
 {
     private static $page = null;
-    private static function getPage($uri = false)
+    public static function getPage($uri = false)
     {
     	if (!$uri) {
     		$uri = $_SERVER['REQUEST_URI'];
