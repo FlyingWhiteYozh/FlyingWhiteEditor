@@ -46,7 +46,7 @@ function fwe_convertUTFtoWIN1251(&$var)
 
 }
 
-require FWE_Conf::ROOT() . '/pages/main.php';
+
 require FWE_Conf::ROOT() . '/page.php';
 require FWE_Conf::ROOT() . '/main.php';
 
