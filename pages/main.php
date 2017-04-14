@@ -44,6 +44,11 @@ class FWE_PageMain
         return $this->page->keywords;
     }
 
+    public function getH1()
+    {
+        return $this->page->h1;
+    }
+
     public function getTextTop()
     {
         return $this->page->text_top;

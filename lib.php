@@ -33,6 +33,11 @@ class FWE_Lib
         return self::getPage()->{__FUNCTION__}();
     }
 
+    public static function getH1()
+    {
+        return self::getPage()->{__FUNCTION__}();
+    }
+
     public static function getTextTop()
     {
         return self::getPage()->{__FUNCTION__}();
